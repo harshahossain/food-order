@@ -24,6 +24,10 @@ export default function Checkout() {
     event.preventDefault();
     const fd = new FormData(event.target);
     const customerData = Object.fromEntries(fd.entries()); //getting all key:value
+
+    console.log(cartCtx.items);
+    console.log(customerData);
+
     fetch("http://localhost:3000/orders", {
       method: "POST",
       headers: {
