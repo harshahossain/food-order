@@ -17,6 +17,12 @@ export default function useHttp(url, config, initialData) {
   const [isLoading, setIsLoadig] = useState(false);
   const [error, setError] = useState();
 
+  //for clearing cart after checkout Finsishes
+
+  function clearData() {
+    setData(initialData);
+  }
+
   const sendRequest = useCallback(
     async function sendRequest(data) {
       setIsLoadig(true);
@@ -42,5 +48,6 @@ export default function useHttp(url, config, initialData) {
     isLoading,
     error,
     sendRequest,
+    clearData,
   };
 }
