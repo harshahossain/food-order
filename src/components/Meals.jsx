@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MealItem from "./MealItem";
 import useHttp from "../hooks/useHttp";
+import Error from "./Error";
 
 const requestConfig = {}; //to stop from chaning config creating infinate loop
 
@@ -30,6 +31,9 @@ export default function Meals() {
 
   if (isLoading) {
     return <p>Fetching meals...</p>;
+  }
+  if (error) {
+    return <Error title="Failed to Fetch meals" message={error} />;
   }
   // if (!loadedMeals) {
   //   return <p>No meals found.</p>;
