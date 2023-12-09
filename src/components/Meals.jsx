@@ -1,24 +1,39 @@
 import { useState, useEffect } from "react";
 import MealItem from "./MealItem";
+import useHttp from "../hooks/useHttp";
+
+const requestConfig = {}; //to stop from chaning config creating infinate loop
 
 export default function Meals() {
   ////states
-  const [loadedMeals, setLoadedMeals] = useState([]);
+  //const [loadedMeals, setLoadedMeals] = useState([]);
 
   ////fetching meals using useEffect to avoid infinite loop
-  useEffect(() => {
-    async function fetchMeals() {
-      const response = await fetch("http://localhost:3000/meals");
+  // useEffect(() => {
+  //   async function fetchMeals() {
+  //     const response = await fetch("http://localhost:3000/meals");
 
-      if (!response.ok) {
-        //
-      }
-      const meals = await response.json();
-      setLoadedMeals(meals);
-    }
-    fetchMeals();
-  }, []);
+  //     if (!response.ok) {
+  //       //
+  //     }
+  //     const meals = await response.json();
+  //     setLoadedMeals(meals);
+  //   }
+  //   fetchMeals();
+  // }, []);
 
+  const {
+    data: loadedMeals,
+    isLoading,
+    error,
+  } = useHttp("http://localhost:3000/meals", requestConfig, []);
+
+  if (isLoading) {
+    return <p>Fetching meals...</p>;
+  }
+  // if (!loadedMeals) {
+  //   return <p>No meals found.</p>;
+  // }
   return (
     <ul id="meals">
       {loadedMeals.map((meal) => (
